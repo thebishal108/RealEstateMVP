@@ -1,4 +1,4 @@
-package com.example.realestateassignment.ui.main
+package com.example.realestateassignment.ui.activity.main
 
 import com.skeleton.mvp.ui.base.BaseInteractorImpl
 
