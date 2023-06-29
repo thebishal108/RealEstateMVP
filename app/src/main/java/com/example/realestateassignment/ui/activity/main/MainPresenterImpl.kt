@@ -2,7 +2,6 @@ package com.example.realestateassignment.ui.activity.main
 
 import android.util.Log
 import com.example.realestateassignment.Interface.ApiInterface
-import com.example.realestateassignment.R
 import com.example.realestateassignment.model.Data
 import com.example.realestateassignment.model.RealEstateListings
 import com.example.realestateassignment.ui.adapter.FacilityAdapter
@@ -32,7 +31,7 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
         repos?.enqueue(object : Callback<Data?>{
             override fun onResponse(call: retrofit2.Call<Data?>, response: Response<Data?>) {
                 data = response.body()!!;
-                for(facility in data.facilities){
+                for(facility in data.facilities!!){
                     realEstateListings.add(RealEstateListings(facility,null))
                 }
                 mMainView.setFacility(realEstateListings)
@@ -48,10 +47,10 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
 
     override fun updateData(position: Int, holder: FacilityAdapter.FacilityViewHolder?) {
         var relnew = ArrayList(realEstateListings)
-        relnew.get(holder!!.adapterPosition).selectedOption = data.facilities.get(holder.adapterPosition).options.get(position)
+        relnew.get(holder!!.adapterPosition).selectedOption = data.facilities!!.get(holder.adapterPosition).options!!.get(position)
         var flag:ArrayList<Boolean> = ArrayList()
         var fl:ArrayList<Boolean> = ArrayList()
-        for(exclusion in data.exclusions){
+        for(exclusion in data.exclusions!!){
             for (i in 0..exclusion.size-1) {
                 for(rel in relnew){
                     if(rel.facility.facilityId.equals(exclusion.get(i).facilityId)){
@@ -67,7 +66,7 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
             flag=ArrayList()
         }
         if(fl.all{it==false}){
-            realEstateListings.get(holder!!.adapterPosition).selectedOption = data.facilities.get(holder.adapterPosition).options.get(position)
+            realEstateListings=ArrayList(relnew)
             mMainView.updateFacility(realEstateListings)
         }else{
             mMainView.showValidation()
