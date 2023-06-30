@@ -48,10 +48,10 @@ class MainActivity : BaseActivity(), MainInterface.MainView,Datatransfer{
     }
 
     override fun showValidation() {
-        Toast.makeText(this,getString(R.string.facility_not_available_in_this_combination),Toast.LENGTH_LONG).show()
+        Toast.makeText(this,getString(R.string.facility_not_available_in_this_combination),Toast.LENGTH_SHORT).show()
     }
 
-    override fun onOptionSelect(position: Int, holder: FacilityAdapter.FacilityViewHolder?) {
+    override fun onOptionSelect(position: Int, holder: Int) {
         mMainPresenter.updateData(position,holder)
     }
 }

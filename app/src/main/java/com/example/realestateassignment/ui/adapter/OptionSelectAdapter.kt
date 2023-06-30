@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.realestateassignment.Interface.Datatransfer
 import com.example.realestateassignment.R
 import com.example.realestateassignment.model.Option
-import com.example.realestateassignment.ui.adapter.FacilityAdapter.FacilityViewHolder
 import com.example.realestateassignment.ui.adapter.OptionSelectAdapter.OptionSelectViewHolder
 
 class OptionSelectAdapter(
     private val context: Context,
     private val options: ArrayList<Option>,
-    private val holder1: FacilityViewHolder,
+    private val holder1: Int,
     private val datatransfer: Datatransfer
 ) : RecyclerView.Adapter<OptionSelectViewHolder>() {
     class OptionSelectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

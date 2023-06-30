@@ -26,7 +26,6 @@ class FacilityAdapter(
     private val datatransfer: Datatransfer
 ) : RecyclerView.Adapter<FacilityViewHolder>() {
     private var optionSelectVehicleDialog: BottomSheetDialog? = null
-    private val optionSelectAdapter: OptionSelectAdapter? = null
 
     class FacilityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var ivImage: ImageView
@@ -52,6 +51,9 @@ class FacilityAdapter(
             holder.tvOptions.text = realEstateListings[position].selectedOption!!.name
         } else {
             holder.tvOptions.setText(R.string.select_option)
+        }
+        if (realEstateListings[position].img != 0) {
+            holder.ivImage.setImageResource(realEstateListings[position].img)
         }
         holder.tvOptions.setOnClickListener {
             var etSearch: EditText
@@ -81,7 +83,7 @@ class FacilityAdapter(
             optionSelectAdapter = OptionSelectAdapter(
                 context,
                 realEstateListings[holder.adapterPosition].facility.options as ArrayList<Option>,
-                holder,
+                holder.adapterPosition,
                 datatransfer
             )
             rvItemSelect.adapter = optionSelectAdapter

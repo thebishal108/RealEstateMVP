@@ -2,9 +2,9 @@ package com.example.realestateassignment.ui.activity.main
 
 import android.util.Log
 import com.example.realestateassignment.Interface.ApiInterface
+import com.example.realestateassignment.R
 import com.example.realestateassignment.model.Data
 import com.example.realestateassignment.model.RealEstateListings
-import com.example.realestateassignment.ui.adapter.FacilityAdapter
 import com.skeleton.mvp.ui.base.BasePresenterImpl
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +32,7 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
             override fun onResponse(call: retrofit2.Call<Data?>, response: Response<Data?>) {
                 data = response.body()!!;
                 for(facility in data.facilities!!){
-                    realEstateListings.add(RealEstateListings(facility,null))
+                    realEstateListings.add(RealEstateListings(facility,null, 0))
                 }
                 mMainView.setFacility(realEstateListings)
                 Log.d("TAG",response.toString())
@@ -45,9 +45,10 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
         })
     }
 
-    override fun updateData(position: Int, holder: FacilityAdapter.FacilityViewHolder?) {
+    override fun updateData(position: Int, holder: Int) {
         var relnew = ArrayList(realEstateListings)
-        relnew.get(holder!!.adapterPosition).selectedOption = data.facilities!!.get(holder.adapterPosition).options!!.get(position)
+        relnew.get(holder).selectedOption = data.facilities!!.get(holder).options!!.get(position)
+        relnew = setImage(relnew,position,holder)
         var flag:ArrayList<Boolean> = ArrayList()
         var fl:ArrayList<Boolean> = ArrayList()
         for(exclusion in data.exclusions!!){
@@ -71,5 +72,42 @@ class MainPresenterImpl(private val mMainView: MainInterface.MainView) : BasePre
         }else{
             mMainView.showValidation()
         }
+    }
+
+    private fun setImage(
+        relnew: ArrayList<RealEstateListings>,
+        position: Int,
+        holder1: Int
+    ): ArrayList<RealEstateListings> {
+        when (data.facilities!!.get(holder1).options!!.get(position).id) {
+            "1" -> {
+                relnew.get(holder1).img = R.drawable.ic_apartment
+            }
+            "2" -> {
+                relnew.get(holder1).img = R.drawable.ic_condo
+            }
+            "3" -> {
+                relnew.get(holder1).img = R.drawable.ic_boat
+            }
+            "4" -> {
+                relnew.get(holder1).img = R.drawable.ic_land
+            }
+            "6" -> {
+                relnew.get(holder1).img = R.drawable.ic_rooms
+            }
+            "7" -> {
+                relnew.get(holder1).img = R.drawable.ic_no_room
+            }
+            "10" -> {
+                relnew.get(holder1).img = R.drawable.ic_swimming
+            }
+            "11" -> {
+                relnew.get(holder1).img = R.drawable.ic_garden
+            }
+            "12" -> {
+                relnew.get(holder1).img = R.drawable.ic_garage
+            }
+        }
+    return relnew
     }
 }
